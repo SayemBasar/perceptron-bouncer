@@ -2,6 +2,8 @@
 
 A tiny project to implement and test a basic perceptron classifier using NumPy and pytest.
 
+https://l2c.northcoders.com/courses/de-ng/py-perceptrons
+
 ## Setup
 
 ```bash

@@ -8,5 +8,3 @@ __pycache__/
 # pytest cache
 .pytest_cache/
 
-# OS cruft
-.DS_Store
