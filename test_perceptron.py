@@ -61,3 +61,32 @@ def test_predict_high_bias():
 	result = p.predict(np.array([[1,0]]))
 	assert result==[1]
 
+# Perceptron Training Tests
+
+def test_train_changes_weights_and_bias():
+    p = Perceptron(input_size=2, learning_rate=0.1)
+    X = np.array([[0, 0], [1, 1]])
+    y = np.array([0, 1])
+
+    initial_weights = p.weights.copy()
+    initial_bias = p.bias
+
+    p.train(X, y, epochs=10)
+
+    assert not np.allclose(p.weights, initial_weights), "Weights should have changed"
+    assert not np.isclose(p.bias, initial_bias), "Bias should have changed"
+
+def test_train_learns_simple_pattern():
+    p = Perceptron(input_size=1, learning_rate=0.5)
+        
+    X = np.array([[0], [1]])
+    y = np.array([0, 1])
+
+    p.train(X, y, epochs=100)
+
+    # After training, should predict close to 0 for input [0] and close to 1 for [1]
+    prob_0 = p.predict_probability(np.array([0]))
+    prob_1 = p.predict_probability(np.array([1]))
+
+    assert prob_0 < 0.3, f"Expected low prob for [0], got {prob_0}"
+    assert prob_1 > 0.7, f"Expected high prob for [1], got {prob_1}"

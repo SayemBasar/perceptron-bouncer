@@ -5,7 +5,7 @@ class Perceptron:
         self.learning_rate=learning_rate
         self.weights=np.zeros(input_size)
         self.bias=0.0
-    
+ 
     def sigmoid(self, z):
         return 1 / (1 + np.exp(-z))
 
@@ -16,5 +16,22 @@ class Perceptron:
     
     def predict(self, X):
         probability=self.predict_probability(X)
-
         return [1 if p >= 0.5 else 0 for p in probability]
+    
+    def train(self, X, y, epochs):
+        epochs = 10000
+        for epoch in range(epochs):
+            # z = np.dot(X, self.weights) + self.bias
+            predictions = self.predict_probability(X)
+            error = predictions - y
+            loss = np.mean(error ** 2)
+            grad = error * predictions * (1 - predictions) 
+            self.weights -= np.dot(X.T, grad)
+            self.bias -= self.learning_rate * np.sum(grad)
+            if epoch % 2000 == 0:
+                print(f"Epoch {epoch}, Loss: {loss:.4f}")
+
+        print("Final predictions:\n", predictions)
+
+
+    
